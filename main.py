@@ -21,7 +21,7 @@ def clean_text(text):
 def main():
     print("[+] starting script...")
     print("[+] loading the data_set")
-    df = pd.read_csv("data_set") #reads the data set
+    df = pd.read_csv("data_set") #veri setini korur
     print(f"[+] Total rows loaded: {len(df)}")
 
     if "genres" in df.columns:
@@ -30,7 +30,7 @@ def main():
         print("[-] could not find genres in dataset!")
         exit()
 
-    # 3. Do Stuff: Count frequencies of specific game genres/types
+    # 3. Do Stuff: oyun türlerinin tekrar sayılarını hesaplar
     genre_counts = {}
     for genre_entry in df["clean_genres"]:
         if ";" in genre_entry:
@@ -57,7 +57,7 @@ def main():
     summary_df["Game_Type"] = game_types
     summary_df["Count"] = total_counts
 
-        #sort by decending
+        #sonucları büyükten kücüge sıralar
     summary_df = summary_df.sort_values(by="Count", ascending=False)
 
     output_filename = "steam_genre_summary.csv"
@@ -65,10 +65,10 @@ def main():
 
     print(f"\n[+] Successfully saved game type counts to '{output_filename}'!")
     
-    # Print the top 10 rows one-by-one or using a simple head
+    # en sık karşılasılan 10 oyun türünü sıralar
     print("\n[+] Top 10 Game Types/Genres:")
     top_ten = summary_df.head(10)
     print(top_ten.to_string(index=False))
 
 
-main() #run the script
+main() #p9rogramı çalıştır
