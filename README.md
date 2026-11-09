@@ -1,6 +1,6 @@
-Doğal Dil İşleme Projesi – Steam Oyun Türleri Analizi
+Doğal Dil İşleme Projesi –  Oyun Türleri Analizi
 
-Bu proje, Steam oyunlarının tür dağılımını analiz ederek en sık karşılaşılan oyun türlerini belirler.
+Bu proje, veri setindeki oyunların tür dağılımını analiz ederek en sık karşılaşılan oyun türlerini belirler.
 Ayrıca TF-IDF yöntemiyle oyun türlerinin veri setindeki ağırlıklarını hesaplar.
 Temel amaç oyun türlerini metin işleme yöntemleriyle analiz etmek ve sonuçları karşılaştırılabilir hâle getirmektir.
 
