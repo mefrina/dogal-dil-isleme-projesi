@@ -12,7 +12,7 @@ def clean_text(text):
     text = text.replace("Â", "a").replace("â", "a")
     text = text.replace("î", "i").replace("Î", "i")
     text = text.replace("İ", "i")
-    text = text.replace("I", "ı")
+    
 
     text = re.sub(r"https?://\S+|www\.\S+", " ", text)
     text = re.sub(r"[^A-Za-z0-9;âîığüşöçİĞÜŞÖÇ]+", " ", text)
