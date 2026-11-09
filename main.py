@@ -48,7 +48,7 @@ def main():
     ).sort_values(by="Count", ascending=False)
 
     summary_df.to_csv(
-        "steam_genre_summary.csv", index=False, encoding="utf-8-sig"
+        "steam_game_genre_summary.csv", index=False, encoding="utf-8-sig"
     )
 
     print("\n[+] Top 10 Game Types:")
@@ -88,7 +88,7 @@ def main():
     }).sort_values(by="Average_TF_IDF", ascending=False)
 
     tfidf_df.to_csv(
-        "steam_tfidf_summary.csv", index=False, encoding="utf-8-sig"
+        "steam_game_tfidf_summary.csv", index=False, encoding="utf-8-sig"
     )
 
     print("\n[+] Top 10 TF-IDF Game Types:")
