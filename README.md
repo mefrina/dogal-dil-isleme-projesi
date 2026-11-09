@@ -1,6 +1,6 @@
 # Doğal Dil İşleme - Oyun Türleri Analizi
 
-Bu proje, Steam oyun veri setindeki oyun türlerinin dağılımını analiz eder. Veri setindeki genres sütunu incelenerek 29 farklı oyun türü tespit edilmiştir. İlk çıktı dosyasında her oyun türünün kaç oyunda bulunduğu hesaplanarak görülme sıklıkları belirlenmiştir. İkinci çıktı dosyasında ise TF-IDF yöntemiyle oyun türlerinin ortalama ağırlıkları hesaplanmıştır. Böylece oyun türleri hem görülme sıklıklarına hem de veri setindeki ayırt ediciliklerine göre karşılaştırılmıştır.
+Bu proje, Steam oyun veri setindeki oyun türlerinin dağılımını analiz eder. Veri setindeki `genres` sütunu incelenerek oyun türleri otomatik olarak tespit edilmiştir. İlk çıktı dosyasında her oyun türünün kaç oyunda bulunduğu hesaplanarak görülme sıklıkları belirlenmiştir. İkinci çıktı dosyasında ise TF-IDF yöntemiyle oyun türlerinin ortalama ağırlıkları hesaplanmıştır. Böylece oyun türleri hem görülme sıklıklarına hem de veri setindeki ayırt ediciliklerine göre karşılaştırılmıştır.
 
 ## Girdi
 
@@ -12,7 +12,10 @@ Bu proje, Steam oyun veri setindeki oyun türlerinin dağılımını analiz eder
 - Pandas
 - NumPy
 - Regex
-- TF-IDF
+
+## Kullanılan Yöntem
+
+- TF-IDF: Hazır bir TF-IDF kütüphanesi kullanılmadan NumPy ile hesaplanmıştır.
 
 ## Çıktılar
 
