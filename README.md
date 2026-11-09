@@ -1,27 +1,24 @@
-doğal dil işleme projesi
-LAB2 - TF - IDF
+Doğal Dil İşleme Projesi – Steam Oyun Türleri Analizi
 
+Bu proje, Steam oyunlarının tür dağılımını analiz ederek en sık karşılaşılan oyun türlerini belirler.
+Ayrıca TF-IDF yöntemiyle oyun türlerinin veri setindeki ağırlıklarını hesaplar.
+Temel amaç oyun türlerini metin işleme yöntemleriyle analiz etmek ve sonuçları karşılaştırılabilir hâle getirmektir.
 
-Oyun Türleri Metin Analizi
+Yapılan İşlemler
 
-Bu proje, Steam oyunlarına ait veri setlerini işleyerek oyun türleri üzerinde metin analizi yapan bir Python aracıdır.
+1. Steam veri seti Python ile yüklenir.
+2. Eksik veriler ve gereksiz karakterler temizlenir.
+3. Metinler küçük harfe dönüştürülür.
+4. Oyun türleri noktalı virgüle göre ayrılır.
+5. Tekrarlanan oyun türleri kaldırılır.
+6. Her oyun türünün görülme sayısı hesaplanır.
+7. Türler için bir sözlük (Vocabulary) oluşturulur.
+8. TF matrisi hesaplanır.
+9. IDF vektörü oluşturulur.
+10. TF ve IDF değerleri çarpılarak TF-IDF matrisi elde edilir.
+11. Ortalama TF-IDF değerleri hesaplanıp sıralanır.
 
-Veri setindeki ham ve düzensiz oyun türü (genres) metinlerini okur.
+Çıktılar
 
-Bazı karakter farklılıklarını gidererek metinleri standart hâle getirir.
-
-Regex kullanarak metin içerisindeki URL bağlantılarını temizler.
-
-HTML etiketlerini ve gereksiz sembolleri kaldırır.
-
-Tüm metinleri küçük harfe dönüştürerek standart bir formata getirir.
-
-Oyun türlerini ayırarak ayrı ayrı inceler.
-
-Her oyun türünün veri setinde kaç defa geçtiğini hesaplar.
-
-Elde edilen sayım sonuçlarını Pandas DataFrame yapısına aktarır.
-
-Oyun türlerini tekrar sayılarına göre büyükten küçüğe sıralar.
-
-En sık karşılaşılan 10 oyun türünü ekranda gösterir.
+* steam_genre_summary.csv: Oyun türlerinin görülme sayıları.
+* steam_tfidf_summary.csv: Oyun türlerinin ortalama TF-IDF değerleri.
