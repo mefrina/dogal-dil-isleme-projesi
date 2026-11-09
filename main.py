@@ -2,19 +2,16 @@ import re
 import pandas as pd
 import numpy as np
 
+
 def clean_text(text):
-    if pd.isna(text):
+    if type(text) != str:
         return ""
 
-    text = str(text)
     text = text.replace("Â", "a").replace("â", "a")
     text = text.replace("î", "i").replace("Î", "i")
     text = text.replace("İ", "i")
 
     text = re.sub(r"https?://\S+|www\.\S+", " ", text)
-    text = re.sub(r"<[^>]+>", " ", text)
-
-    # Noktalı virgülü türleri ayırmak için koru
     text = re.sub(r"[^A-Za-z0-9;âîığüşöçİĞÜŞÖÇ]+", " ", text)
 
     return " ".join(text.lower().strip().split())
@@ -29,39 +26,52 @@ def main():
         print("[-] genres column not found!")
         return
 
-    # Oyun türlerini temizle ve ayır
-    genre_lists = df["genres"].apply(
-        lambda x: list(dict.fromkeys(
-            g.strip() for g in clean_text(x).split(";") if g.strip()
-        ))
-    )
+    # Oyun türlerini ayır ve tekrar eden türleri temizle
+    genre_lists = []
 
-    # 1. Oyun türlerinin sayımı
+    for g_str in df["genres"].values:
+        temiz = clean_text(g_str)
+        liste = []
+
+        for g in temiz.split(";"):
+            g = g.strip()
+
+            if g and g not in liste:
+                liste.append(g)
+
+        genre_lists.append(liste)
+
+    # 1. Oyun türlerinin görülme sayılarını hesapla
     genre_counts = {}
+
     for tags in genre_lists:
         for tag in tags:
-            genre_counts[tag] = genre_counts.get(tag, 0) + 1
+            if tag in genre_counts:
+                genre_counts[tag] += 1
+            else:
+                genre_counts[tag] = 1
 
     summary_df = pd.DataFrame(
         list(genre_counts.items()),
         columns=["Game_Type", "Count"]
     ).sort_values(by="Count", ascending=False)
 
-    summary_df.to_csv(
-        "steam_game_genre_summary.csv", index=False, encoding="utf-8-sig"
-    )
+    summary_df.to_csv("steam_game_genre_summary.csv", index=False)
 
     print("\n[+] Top 10 Game Types:")
     print(summary_df.head(10).to_string(index=False))
 
-    # 2. Oyun türleri için indeks sözlüğü oluştur
+    # 2. Her oyun türü için bir indeks oluştur
     genre2idx = {}
+    sayac = 0
+
     for tags in genre_lists:
         for genre in tags:
             if genre not in genre2idx:
-                genre2idx[genre] = len(genre2idx)
+                genre2idx[genre] = sayac
+                sayac += 1
 
-    # 3. TF matrisi
+    # 3. TF matrisini oluştur ve normalize et
     game_count = len(genre_lists)
     vocab_size = len(genre2idx)
     tf = np.zeros((game_count, vocab_size))
@@ -70,33 +80,29 @@ def main():
         for genre in tags:
             tf[i, genre2idx[genre]] += 1
 
-        # Her oyunun tür sayısı farklı olabileceği için TF değerlerini toplam tür sayısına böldüm.
-        if tags:
-            tf[i] /= len(tags)
+        # Her oyunun tür sayısı farklı olduğu için TF değerlerini normalize et
+        if len(tags) > 0:
+            tf[i] = tf[i] / len(tags)
 
-    # 4. IDF vektörü
+    # 4. Her türün bulunduğu oyun sayısını hesapla ve IDF değerlerini bul
     doc_freq = np.sum(tf > 0, axis=0)
-    idf = np.zeros(vocab_size)
-    valid = doc_freq > 0
-    idf[valid] = np.log(game_count / doc_freq[valid])
+    idf = np.log(game_count / doc_freq)
 
-    # 5. TF-IDF matrisi
+    # 5. TF ve IDF değerlerini çarparak TF-IDF matrisini oluştur
     tf_idf = tf * idf
 
-    # Türlerin ortalama TF-IDF değerlerini hesapla
+    # Oyun türlerinin ortalama TF-IDF değerlerini hesapla
     tfidf_df = pd.DataFrame({
         "Game_Type": list(genre2idx.keys()),
         "Average_TF_IDF": tf_idf.mean(axis=0)
     }).sort_values(by="Average_TF_IDF", ascending=False)
 
-    tfidf_df.to_csv(
-        "steam_game_tfidf_summary.csv", index=False, encoding="utf-8-sig"
-    )
+    tfidf_df.to_csv("steam_game_tfidf_summary.csv", index=False)
 
     print("\n[+] Top 10 TF-IDF Game Types:")
     print(tfidf_df.head(10).to_string(index=False))
     print("\n[+] All operations completed!")
-    
+
 
 if __name__ == "__main__":
     main()
