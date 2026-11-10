@@ -1,6 +1,4 @@
-# Doğal Dil İşleme - Oyun Türleri Analizi
-
-Doğal Dil İşleme - Oyun Türleri Analizi
+# Doğal Dil İşleme - Oyun Türleri 
 
 Bu projede Steam oyun veri seti kullanılarak oyun türlerinin dağılımı analiz edilmiştir. İlk olarak genres sütunundaki veriler temizlenmiş, noktalı virgül yardımıyla oyun türlerine ayrılmış ve her oyunda tekrar eden türler kaldırılmıştır.
 
