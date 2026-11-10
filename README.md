@@ -6,7 +6,7 @@ Bu projede Steam oyun veri seti kullanılarak oyun türlerinin dağılımı anal
 
 İkinci analizde oyun türlerinin veri setindeki ayırt ediciliğini ve ağırlığını karşılaştırmak amacıyla TF-IDF yöntemi uygulanmıştır. Bu işlemde:
 
-* TF (Term Frequency): Bir oyun türünün ilgili oyundaki görülme sayısının, o oyundaki toplam farklı tür sayısına bölünmesiyle hesaplanmıştır.
+*  TF (Term Frequency): Her oyunda bulunan farklı oyun türlerinin sayısı, o oyundaki toplam farklı tür sayısına bölünerek normalize edilmiştir.
 * IDF (Inverse Document Frequency): Toplam oyun sayısının, ilgili türün bulunduğu oyun sayısına bölünmesinin doğal logaritması alınarak hesaplanmıştır.
 * TF-IDF: TF ve IDF değerleri çarpılarak her oyun için türlerin TF-IDF değerleri elde edilmiştir.
 
