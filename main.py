@@ -29,7 +29,7 @@ def main():
         print("[-] genres column not found!")
         return
 
-    # Oyun türlerini ayır ve tekrar eden türleri temizle
+    
     genre_lists = []
 
     for g_str in df["genres"].values:
@@ -44,7 +44,7 @@ def main():
 
         genre_lists.append(liste)
 
-    # 1. Oyun türlerinin görülme sayılarını hesapla
+    
     genre_counts = {}
 
     for tags in genre_lists:
@@ -64,7 +64,7 @@ def main():
     print("\n[+] Top 10 Game Types:")
     print(summary_df.head(10).to_string(index=False))
 
-    # 2. Her oyun türü için bir indeks oluştur
+    
     genre2idx = {}
     sayac = 0
 
@@ -74,7 +74,7 @@ def main():
                 genre2idx[genre] = sayac
                 sayac += 1
 
-    # 3. TF matrisini oluştur ve normalize et
+    
     game_count = len(genre_lists)
     vocab_size = len(genre2idx)
     tf = np.zeros((game_count, vocab_size))
@@ -87,14 +87,14 @@ def main():
         if len(tags) > 0:
             tf[i] = tf[i] / len(tags)
 
-    # 4. Her türün bulunduğu oyun sayısını hesapla ve IDF değerlerini bul
+    
     doc_freq = np.sum(tf > 0, axis=0)
     idf = np.log(game_count / doc_freq)
 
-    # 5. TF ve IDF değerlerini çarparak TF-IDF matrisini oluştur
+    
     tf_idf = tf * idf
 
-    # Oyun türlerinin ortalama TF-IDF değerlerini hesapla
+    
     tfidf_df = pd.DataFrame({
         "Game_Type": list(genre2idx.keys()),
         "Average_TF_IDF": tf_idf.mean(axis=0)
